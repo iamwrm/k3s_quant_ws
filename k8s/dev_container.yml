@@ -20,12 +20,20 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 22
+          volumeMounts:
+            - mountPath: /home/ubuntu
+              name: ubuntu-home
           resources:
             requests:
               cpu: "0.5"
               memory: "1G"
             limits:
               memory: "1G"
+      volumes:
+        - name: ubuntu-home
+          hostPath:
+            path: /home/ubuntu/dev_home
+            type: Directory
 ---
 apiVersion: v1
 kind: Service
