@@ -24,3 +24,9 @@ spec:
         - matchName: "download.sublimetext.com"
         - matchName: "packages.microsoft.com"
         - matchName: "ppa.launchpad.net"
+        - matchName: "repo.anaconda.com"
+        - matchName: "pypi.python.org"
+        - matchName: "repo.continuum.io"
+    - toEndpoints:
+      - matchLabels:
+          app: dev
