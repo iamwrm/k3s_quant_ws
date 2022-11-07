@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev
+  labels:
+    app: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      containers:
+        - name: devcontainer
+          image: dev_container:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 22
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "1G"
+            limits:
+              memory: "1G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-ingress
+spec:
+  selector:
+    app: dev
+  ports:
+    - protocol: TCP
+      port: 1022
+      targetPort: 22
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 0.0.0.0
