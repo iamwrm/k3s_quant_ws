@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kasm
+  labels:
+    app: kasm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kasm
+  template:
+    metadata:
+      labels:
+        app: kasm
+    spec:
+      containers:
+        - name: kasm
+          image: ghcr.io/ren15/ubuntu_kasm:0.0.1
+          env:
+          - name: VNC_PW
+            value: password
+          ports:
+            - containerPort: 6901
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "4G"
+            limits:
+              memory: "4G"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kasm-ingress
+spec:
+  selector:
+    app: kasm
+  ports:
+    - protocol: TCP
+      port: 6901
+      targetPort: 6901
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 0.0.0.0

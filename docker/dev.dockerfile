@@ -1,4 +1,3 @@
-
 FROM ubuntu:20.04
 
 ARG USER_NAME=ubuntu
@@ -7,9 +6,12 @@ ARG USER_ID=1000
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
-    apt-get update \
-    && apt-get install -y openssh-server \
-                      xauth sudo \
+    apt-get update \ 
+    && apt-get install -y \
+        openssh-server \
+        xauth \
+        sudo \
+    && rm -rf /var/lib/apt/list/* \
     && mkdir /var/run/sshd \
     && ssh-keygen -A \
     && sed -i "s/^.*PasswordAuthentication.*$/PasswordAuthentication yes/" /etc/ssh/sshd_config \
