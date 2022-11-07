@@ -38,15 +38,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-ingress
+  name: dev
 spec:
   selector:
     app: dev
   ports:
     - protocol: TCP
-      port: 1022
+      port: 22
       targetPort: 22
-  type: LoadBalancer
+      nodePort: 30022
+  type: NodePort
 status:
   loadBalancer:
     ingress:
